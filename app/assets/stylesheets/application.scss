@@ -1,0 +1,91 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ * 
+ *= require_tree .
+ *= require_self
+ */
+
+$theme-colors: (
+  "primary": #01256e,
+  "secondary": #95001a
+);
+
+
+@import url('https://fonts.googleapis.com/css?family=Gentium+Basic&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+@import "bootstrap";
+@import "font-awesome";
+
+/* 
+ * Custom Styles
+ */
+
+.navbar-brand {
+  font-family: 'Gentium Basic', serif;
+}
+
+.nav-item {
+  font-family: 'Gentium Basic', serif;
+}
+
+h1 {
+  font-size: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #01256e;
+  font-weight: 500;
+  line-height: 1.25;
+  font-family: 'Gentium Basic', serif;
+}
+
+h2 {
+  text-align: center;
+  font-size: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #01256e;
+  font-weight: 300;
+  line-height: 1.25;
+  margin: 2em 0 .67em;
+  font-family: 'Gentium Basic', serif;
+}
+
+h3 {
+  font-size: 16px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  color: #01256e;
+  font-weight: 300;
+  line-height: 1.25;
+  font-family: 'Gentium Basic', serif;
+}
+
+p {
+  font-size: 18px;
+  color: #44464b;
+  font-family: "Open Sans",sans-serif;
+  line-height: 1.5;
+  font-weight: 100;
+  text-rendering: optimizeLegibility;
+}
+
+li {
+  line-height: 1.5;
+  font-family: "Open Sans",sans-serif;
+}
+
+footer {
+  margin: 20px;
+  text-align: center;
+  color: #cfd0d2;
+}
