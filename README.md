@@ -1,5 +1,5 @@
 # Homework 3: PennInTouch Lite
-Regular credit is due **11:59PM, Tuesday, April 7th**.
+Regular credit is due **11:59PM, Thursday, April 16th**.
 Extra credit is due on the last day of class.
 
 ## I. Getting Started
@@ -20,16 +20,16 @@ It is important to understand what we have done for you:
 * We configured bootstrap and some custom CSS in `/assets/stylesheets/application.scss`. These styles follow the [Central Penn Web Identity](https://branding.web-resources.upenn.edu/web-identity)
 * We set the root to `pages#home`, created a `PagesController`, and wrote the homepage with HTML `/views/pages/home.html.erb`.
 * We provided `/views/layouts/_navbar.html.erb`, a partial used in `/views/layouts/application.html.erb`. You will need to modify this navbar after you have implemented sessions.
-* We created the `Department` model. If you ran `rails db:seed`, your database now contains all 224 departments of Penn. The `Department` has a one-to-many association with `Course`s. It doesn't have controller and views and YOU DONT NEED TO WORRY ABOUT THIS throughout them homework. Just keep in mind that when you create the `Course` model, you need to maintain the one-to-many association.
+* We created the `Department` model. If you had run `rails db:seed`, your database would now contains all 224 departments of Penn. The `Department` has a one-to-many association with `Course`s. It doesn't have controller and views and YOU DONT NEED TO WORRY ABOUT THIS throughout them homework. Just keep in mind that when you create the `Course` model, you need to maintain the one-to-many association.
 * We created a `RegistrationController` class in `registration_controller.rb` which contains stubbed code that you need to complete when implementing the many-to-many association between courses and students through registrations. There are no views or CRUD controller methods for `Registration`, so you don't need to worry about them.
 * We created a `SessionsController` class in `sessions_controller.rb` which contains contains stubbed code that you need to complete when implementing sessions. There is a `/views/sessions/new.html.erb` where will need to implement the login form.
 
 It is a good idea to do a "Find in Folder" (global search) in VSCode for  the keyword `TODO`. This marks all the unimplemented code in the provided files we give you.
 
 ### Understanding the Features
-To understand the expected result of this project, go to [my demo](FIXME: DEMO LINK) and see the final result.
+To understand the expected result of this project, go to [my demo](https://cis196-hw3.herokuapp.com/courses) and see the final result.
 
-[FIXME: Result!!]
+You can try signing up once as an instructor, and a second time as a student. The features available to an "instructor" and a "student" differs a little (as you'll also implement in the last section). You may try creating a course as an instructor, adding a course as a student, log out, log in, etc.
 
 > **Sanity Check**
 > 1. run `rails c` to check if `Department.all.count == 224`.
@@ -42,7 +42,7 @@ In this project, you may find yourself in need of dropping your database once in
 ## II. Generating Scaffolds and Models
 The first task of this project is for you to figure out the CRUD models. There are 4 models involved: `Department`, `Course`, `User`, `Registration`(which is just a join-table for courses and users). Recall from the lectures that `session` is not a model, but just an in-memory construct. The relationship/association between the four models are as such:
 
-[FIXME: DB diagram]
+![](https://i.imgur.com/YwWPg0G.png)
 
 As you can see:
 1. `Department` and `Course` is a one-to-many association. Although the starter code have fully implemented `Department`, you are responsible for setting up `Course` and the association.
@@ -61,9 +61,9 @@ The `User` model should have `first_name` and `last_name`, `pennkey` columns of 
 ##### Registration
 The `Registration` join table should have `references` to a `course` and a `user`. It does NOT need views and CRUD methods in controller, so it's better to use `model` generator. Note that we have provided you with a `registration_controller.rb` where you will be implementing the `add_course` and `drop_course` feature.
 
-Make sure to run `rails db:migrate`!
+Be sure to run `rails db:migrate`!
 
-After that, make sure you have added the necessary lines to the model files to establish the required associations! Be sure to debug and test these behaviors using `rails c`. Also make sure to add the `dependent: :destroy` option where appropriate.
+After that, make sure you have added the necessary lines to the model files to establish the required associations! Be sure to debug and test these behaviors using `rails c`. Also, be sure to add the `dependent: :destroy` option where appropriate.
 
 > **Sanity Check**
 > At this point, you should be able to:
@@ -76,22 +76,21 @@ While our models have our desired attributes, they are far from complete. We wan
 #### Course
 1. You should validate that the `department`, `code`, `title`, and `description` are always present. 
 2. You should implement an instance method called `full_code`  that returns a string which combines the department code and the course code for that course. For example: for a course with code `196` whose department has code `CIS`, the method should return `"CIS-196"`. Hint: string interpolation helps.
-3. You should validate that checks that the `full_code` of each course is unique. There are two ways to approach this: you can either write a custom validation that leverages the `full_code` method you just implemented, or you can use `uniqueness` with `scope` documented [here](https://stackoverflow.com/questions/45335038/rails-how-to-validate-uniqueness-of-an-attribute-only-within-a-one-to-many-rela) and [here](https://guides.rubyonrails.org/active_record_validations.html#uniqueness).
+3. You should validate that checks that the `full_code` of each course is unique. you can use `uniqueness` with `scope` documented [here](https://stackoverflow.com/questions/45335038/rails-how-to-validate-uniqueness-of-an-attribute-only-within-a-one-to-many-rela) and [here](https://guides.rubyonrails.org/active_record_validations.html#uniqueness).
 4. You should implement an instance method called `instructor`, which returns the first user in the course's `users` array whose `is_instructor` field is `true`. Hint: use Arel method `find_by`.
 5. You should implement an instance method called `instructor=`, which takes in a `user` as an argument. The method first checks whether the user's `is_instructor` field is `true`, if so, shovel the user into the course's `users` array. This is like a setter method for instructor of a course.
 6. You should implement an instance method called `students`, which returns all users in the course;s `users` array whose `is_instructor` field is `false`. Hint: use Arel method `where`.
 
 ##### User
 1. You should validate that the `first_name`, `last_name`, `pennkey`, and `password_hash` are always present. 
-2. You should validate that the `pennkey` is unique for each student.
-3. You should implement 
-4. You should implement an instance method called `full_name` that will return a user's full name (i.e. The user's first and last name separated by a space).
-5. You should implement a class method called `students`, which returns all users whose `is_instructor` field is `false`.
-6. You should implement a class method called `instructors`, which returns all users whose `is_instructor` field is `true`.
-7. You will come back to add a few more methods to enable BCrypt, following [the tutorial](https://github.com/codahale/bcrypt-ruby#the-user-model).
+2. You should validate that the `pennkey` is unique for each user.
+3. You should implement an instance method called `full_name` that will return a user's full name (i.e. The user's first and last name separated by a space).
+4. You should implement a class method called `students`, which returns all users whose `is_instructor` field is `false`.
+5. You should implement a class method called `instructors`, which returns all users whose `is_instructor` field is `true`.
+6. You will come back to add a few more methods to enable BCrypt, following [the tutorial](https://github.com/codahale/bcrypt-ruby#the-user-model).
 
 ##### Registration
-1. You should validate that every **student and course *pair*** is unique in our join table.
+1. You should validate that every **student(user) and course *pair*** is unique in our join table. Again, you will need to use `uniqueness` with `scope`. See documentation [here](https://stackoverflow.com/questions/34424154/rails-validate-uniqueness-of-two-columns-together) and [here](https://guides.rubyonrails.org/active_record_validations.html#uniqueness)
 
 > **Sanity Check**
 > 1. You should test the correctness of your validations using the CRUD operations in `rails s`
@@ -111,11 +110,11 @@ Before we increase the complexity in our features, it is a good idea to first im
 This section is extensively discussed in lecture 9 so be sure to review the lecture slides.
 
 ### Integrating BCrypt
-Recall that we **never** want to store passwords in plain text- it's a security nightmare. To address this, we utilize the BCrypt function to help us hash our passwords.
+Recall that we **never** want to store passwords in plain text -- it's a security nightmare. To address this, we utilize the BCrypt function to help us hash our passwords.
 
 Since Gemfile in the starter code already includes BCrypt, you should have BCrypt already available to you. Follow the ["User Model" section of BCrypt documentation](https://github.com/codahale/bcrypt-ruby#the-user-model) to modify `user.rb` model file again. This step is consistent with what's described in the slides.
 
-To sum up what's been done in this step: First, `user#password`, is a **getter method** that reads from our database and creates a `BCrypt::Password` object where we can directly compare plain-text passwords to. Second, `user#password=`, is a setter method for the `password_hash` field of the user that sets the value to the hashed version of the plain-text password we feed in. Therefore, with these helper methods, you **should never have to use `password_hash` directly**. You should test this out in `rails c`
+To sum up what's been done in this step: First, `user#password`, is a **getter method** that reads from our database and creates a `BCrypt::Password` object where we can directly compare plain-text passwords to. Second, `user#password=`, is a setter method for the `password_hash` field of the user that sets the value to the hashed version of the plain-text password we feed in. Therefore, with these helper methods, you **should never have to use `password_hash` directly**. You may test this out in `rails c`
 
 ```ruby
 @user = User.new({first_name: .......})
@@ -128,11 +127,11 @@ To sum up what's been done in this step: First, `user#password`, is a **getter m
 # => false
 ```
 
-If the above step works for you, you should make sure you hash the password in the `create` method and `update` method of the `UserController`.
+If the above step works for you, you should make sure you hash the password in the `create` method and `update` method of the `UsersController`.
 
 For the `create` method, after a user is `new`ed, you should call the `password=` set method and feed it with the plain-text password. (Hint: the plaintext password is the `password_hash` field you received from the form, which is now located in `user_params`). 
 
-For the `update` method, Instead of directly calling an `update`, you should call the `password=` set method again with the new plain-text password before saving to the database.
+For the `update` method, Instead of directly calling an `update` with the `user_params`, you should `update` down to [two steps](https://stackoverflow.com/a/11783090): `assign_attributes` and `save`, just like `new` and `save` in `create`. After you assign attribute, and before you call save, you should call the `password=` set method again with the new plain-text password before saving to the database.
 
 You may want to use `binding.pry` to set breakpoints in these methods to inspect whether or not passwords are correctly retrieved, hashed, and stored.
 
@@ -168,6 +167,8 @@ For a finishing touch, make sure you:
 1. In `UsersController#destroy`, add a `reset_session` call before you redirect. Otherwise your `logged_in?` will return true for a non-retrievable user instance.
 2. In `CoursesController#create`, set the course's instructor to the `current_user` **after** saving to the database and before redirecting.
 
+It is also recommended that you change the `text_field` for `password_hash` to a `password_field`, and change the label to just "password".
+
 > **Sanity Check**
 > 1. You should be able to use the difference in navbar to tell whether or not a user is logged in.
 > 2. You should be able to create a user with a plain-text password, authenticate using that plain-text password, update the password with a new plain-text password in `edit`, log out, and reauthenticate using the new password, **BUT NOT the OLD PASSWORD**.
@@ -177,7 +178,7 @@ For a finishing touch, make sure you:
 We will implement the main feature of PennInTouch in this section, which is add and drop course. We will develop appropriate views to enable these action.
 
 ### Routes for `RegistrationsController`
-You'll need to modify `routes.rb` to add 2 routes, one for adding a course for a student, and one for dropping a course for a student. The HTTP methods and the paths are completely up to you, although our recommended combination is:
+You'll need to modify `routes.rb` to add 2 routes, one for adding a course for a student (user), and one for dropping a course for a student (user). The HTTP methods and the paths are completely up to you, although our recommended combination is:
 * POST method, for path "/add_course/:user_id/:course_id"
 * DELETE method, for path "/drop_course/:user_id/:course_id"
 
@@ -204,7 +205,7 @@ In the end, don't forget to redirect the user to its own show page.
 
 
 ### Views for Course Registration
-You will need to extensively modify the views of your current project. The final result should look like when I have in [my demo](FIXME: link!!!). Some major changes are described here:
+You will need to extensively modify the views of your current project. Start by removing the `scaffold.scss` from `/assets/stylesheets/`. The final result should look like what we have in [the demo](https://cis196-hw3.herokuapp.com/courses). Some major changes are described here:
 
 ##### Course `index` page:
 Instead of displaying a table row, you should display a [bootstrap card](https://getbootstrap.com/docs/4.0/components/card/#titles-text-and-links) for each course, and each card should take up 6 columns in a 12-column bootstrap row.
@@ -254,12 +255,13 @@ The above modifications to views only hide the certain routes from clicking acce
 1. A non-logged-in user can only access root page, sign up ("users#new", "users#create"), and log in.
 2. A logged-in user cannot edit another user's information.
 3. A logged-in user can only register and drop courses for herself, and only a student can register and drop courses.
-4. A logged-in instructor can only edit courses created by herself, and only an instructor can create courses.
-5. If any of the above is violated by a logged-in user, the user should be redirected to either the course index page or the show page of herself, depending on the circumstances.
+4. A logged-in student can only Read courses, but cannot create, update, destroy courses.
+5. A logged-in instructor can only edit courses created by herself, and only an instructor can create courses.
+6. If any of the above is violated by a logged-in user, the user should be redirected to either the course index page or the show page of herself, depending on the circumstances.
 
 To implement these invariants, you will need to use `before_action` on various controllers. You can define the methods used by `before_action` either in `ApplicationController`, or as private methods of certain controllers. Be sure to check for whitelist (`except`) and blacklist (`only`) defined by before_actions.
 
-If you are unsure about certain behaviors, please ask on Piazza or reference [the demo](FIXME: link). 
+If you are unsure about certain behaviors, please ask on Piazza or reference [the demo](https://cis196-hw3.herokuapp.com/courses). 
 
 ## VI. Deployment and Submission
 Same as with HW2, you need to deploy this project on Heroku. Follow the steps in HW2 if you forgot how to do it.
