@@ -205,23 +205,11 @@ RSpec.feature "Courses Features", type: :feature do
       end
     end
 
-    context "when an instructor is logged in, but not the course creator" do
-      it "redirects the courses index page" do
-        page.set_rack_session(user_id: user1.id)
-        visit "/courses/#{course1.id}/edit"
-        expect(current_path).to eq("/courses")
-      end
-    end
-
     context "when the course creator is logged in" do
       before :each do
         page.set_rack_session(user_id: user1.id)
         course1.instructor = user1
         visit "/courses/#{course1.id}/edit"
-      end
-
-      it "has a button to delete the course" do
-        expect(page).to have_xpath("//a[@href='/courses/#{course1.id}' and @data-method='delete']")
       end
 
       it "displays a pre-populated form" do
@@ -239,25 +227,6 @@ RSpec.feature "Courses Features", type: :feature do
         click_button "Update Course"
         expect(page).to have_text("Updated title")
       end
-    end
-  end
-
-  describe "#destroy" do
-    before(:each) do
-      page.set_rack_session(user_id: user1.id)
-      course1.instructor = user1
-      visit "/courses/#{course1.id}/edit"
-    end
-
-    it "deletes the course" do
-      expect { click_link "Delete Course" }.to change { Course.count }.by(-1)
-    end
-
-    it "redirects to the index page" do
-      click_link "Delete Course"
-
-      expect(page).to have_text("Course was successfully destroyed.")
-      expect(current_path).to eq("/courses")
     end
   end
 end

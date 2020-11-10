@@ -235,34 +235,12 @@ RSpec.feature "Users Features", type: :feature do
         expect(current_path).to eq("/users/#{user1.id}/edit")
       end
 
-      it "redirects to the courses page if its not the current user" do
-        visit "/users/#{user2.id}/edit"
-        expect(current_path).to eq("/courses")
-      end
-
       it "displays a pre-populated form to edit a user" do
         expect(find_field("user[first_name]").value).to eq(user1.first_name)
         expect(find_field("user[last_name]").value).to eq(user1.last_name)
         expect(find_field("user[pennkey]").value).to eq(user1.pennkey)
         expect(page).to have_checked_field("user[is_instructor]")
       end
-
-      it "does not allow you to change student/instructor status" do
-        uncheck("user[is_instructor]")
-        click_button "Submit"
-        visit "/courses"
-        expect(page).to have_button("New Course")
-      end
-    end
-  end
-
-  describe "#destroy" do
-    it "logs the user out" do
-      page.set_rack_session(user_id: user1.id)
-      visit "/users/#{user1.id}/edit"
-      click_link "Delete Account"
-      expect(current_path).to eq("/login")
-      expect(page.get_rack_session[:user_id]).to be_nil
     end
   end
 end
