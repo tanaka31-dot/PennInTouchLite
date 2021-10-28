@@ -264,7 +264,7 @@ To implement these invariants, you will need to use `before_action` on various c
 If you are unsure about certain behaviors, please ask on Piazza or reference [the demo](https://cis196-hw3.herokuapp.com/courses). 
 
 ## VI. Deployment and Submission
-Same as with HW2, you need to deploy this project on Heroku. Follow the steps in HW2 if you forgot how to do it.
+Same as with HW3, you need to deploy this project on Heroku. Follow the steps in HW3 if you forgot how to do it.
 
 When you submit:
 1. stage all changes, commit, and push to gitlab
