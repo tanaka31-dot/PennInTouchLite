@@ -1,5 +1,5 @@
 # Homework 3: PennInTouch Lite
-Regular credit is due **11:59PM, Wednesday, March 31st**.
+Regular credit is due **11:59PM, Friday, November 19th**.
 Extra credit is due on the last day of class.
 
 ## I. Getting Started
@@ -268,8 +268,8 @@ Same as with HW2, you need to deploy this project on Heroku. Follow the steps in
 
 When you submit:
 1. stage all changes, commit, and push to gitlab
-2. zip up the project and upload it on canvas
-3. Along with your canvas submission, post a comment that is the link to your heroku-deployed project.
+2. share the project with me on gitlab Mcolombo99
+3. Submit your heroku link on gradescope
 
 
 ## VII. Extra Credits
