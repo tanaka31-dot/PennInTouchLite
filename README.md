@@ -1,4 +1,4 @@
-# Homework 3: PennInTouch Lite
+# Homework 4: PennInTouch Lite
 Regular credit is due **11:59PM, Friday, November 19th**.
 Extra credit is due on the last day of class.
 
