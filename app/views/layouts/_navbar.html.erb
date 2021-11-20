@@ -9,12 +9,15 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
           <!-- Should only be seen if logged in-->
+          <% if logged_in? %>
           <li class="nav-item"><%= link_to 'Users', "/users", class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to 'Courses', "/courses", class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to 'Log Out', '/logout', method: :delete, class: 'nav-link' %></li>
           <!-- Should only be seen if NOT logged in -->
+          <% else %>
           <li class="nav-item"><%= link_to 'Sign Up', "/users/new", class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to 'Log In', '/login', class: 'nav-link' %></li>
+          <% end %>
       </ul>
     </div>
   </div>

@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Users</h1>
+
+<%=link_to 'My Profile', current_user, class: "btn btn-primary"%>
+
+<h3>Instructors</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Pennkey</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <% @users.each do |user| %>
+  <%if user.is_instructor%>
+    <tr>
+      <td><%= user.first_name %></td>
+      <td><%= user.last_name %></td>
+      <td><%= user.pennkey %></td>
+      <td><%= link_to 'Show', user  %></td>
+    </tr>
+  <%end%> 
+  <% end %>
+</table>
+
+<h3>Students</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Pennkey</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <% @users.each do |user| %>
+  <%if !user.is_instructor%>
+    <tr>
+      <td><%= user.first_name %></td>
+      <td><%= user.last_name %></td>
+      <td><%= user.pennkey %></td>
+      <td><%= link_to 'Show', user%></td>
+    </tr> 
+  <%end%>
+  <% end %>
+</table>

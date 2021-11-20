@@ -1,0 +1,36 @@
+
+<!--Created this form so that the user cannot switch between instructor and student roles-->
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-8">
+      <%= form.label :first_name %>
+      <%= form.text_field :first_name, class: 'form-control'%>
+
+      <%= form.label :last_name %>
+      <%= form.text_field :last_name, class: 'form-control' %>
+
+      <%= form.label :pennkey %>
+      <%= form.text_field :pennkey, class: 'form-control' %>
+
+      <%= form.label :password %>
+      <%= form.password_field :password_hash, class: 'form-control'%>
+
+      <div class="col-xs-3 btn-block">
+        <%= form.submit "Submit", class: "btn btn-primary" %>
+      <div>
+
+   <%end%>
+  </div>
+</div>
