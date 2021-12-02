@@ -3,38 +3,35 @@
 <h1>Courses</h1>
 
 <%if current_user.is_instructor%>
-  <%= link_to 'New Course', new_course_path, class: "btn btn-primary" %>
+  <%= link_to 'New Course', new_course_path, class: "btn btn-primary mb-4" %>
 <%end%>
 
-
-<div class = "col-6 justify-content-evenly">
-<div class = "row-12 justify-content-evenly">
-
-  <div class="card-body">
-  <% @courses.each do |course| %>
-      <div class="card">  
+<div class = "row">
+<% @courses.each do |course| %>
+  <div class="col-sm-6 mb-4">
+    <div class="card">
+      <div class="card-body">
         <h4 class="card-title"><%=course.full_code%></h4>
-        <h4 class="card-sub-title"><%=course.instructor.full_name%></h4>
+        <h3 class = "card-subtitle"><%=course.instructor.full_name%></h3>
         <p class="card-text"><%=truncate(course.description, :length => 200)%></p>
-        <div> 
-         <%=link_to 'Show', course, class: "btn btn-primary"%>
-        
+        <%=link_to 'Show', course, class: "btn btn-primary"%>
         <%if current_user.is_instructor && current_user == course.instructor%>
-            <%= link_to 'Edit', edit_course_path(course), class: "btn btn-primary" %>   
+          <%= link_to 'Edit', edit_course_path(course), class: "btn btn-primary" %>   
         <%end%>
 
         <%if !current_user.is_instructor%>
-           <%if course.students.include?(current_user)%>
-              <%=link_to 'Drop', drop_course_path(current_user, course), method: :delete, class: "btn btn-primary"%>
-            <%else%>
-              <%=link_to 'Add', add_couse_path(current_user, course), method: :post, class: "btn btn-primary"%>
-           <%end%>
+          <%if course.students.include?(current_user)%>
+            <%=link_to 'Drop', drop_course_path(current_user, course), method: :delete, class: "btn btn-primary"%>
+          <%else%>
+            <%=link_to 'Add', add_couse_path(current_user, course), method: :post, class: "btn btn-primary"%>
+          <%end%>
         <%end%>
+
+      </div>
+    </div>
+  </div>
   <%end%>
-      
-    <div>    
-<div>  
-<div>
+</div>
 
 
 

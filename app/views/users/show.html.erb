@@ -34,23 +34,25 @@
     <h1>Courses Taking</h1>
 <%end%>
 
-<%Course.all.each do |course| %>
-<%if course.users.include?(@user)%>
-
-   <div class="row">
-    <div class="card-body">  
-      <h4 class="card-title"><%=course.full_code%></h4>
-          <h4 class="card-sub-title"><%=course.instructor.full_name%></h4>
-          <p class="card-text"><%=truncate(course.description, :length => 200)%></p>
-          <%=link_to 'Show', course, class: "btn btn-primary"%>
-
-          <%if @user == current_user && current_user == course.instructor%> 
+<div class = "row">
+  <%Course.all.each do |course| %>
+    <%if course.users.include?(@user)%>
+      <div class="col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title"><%= course.full_code %></h4>
+            <h3 class = "card-subtitle"><%=course.instructor.full_name%></h3>
+            <p class="card-text"><%=truncate(course.description, :length => 200)%></p>
+            <%=link_to 'Show', course, class: "btn btn-primary"%>
+            <%if @user == current_user && current_user == course.instructor%> 
               <%= link_to 'Edit', edit_course_path(course), class: "btn btn-primary" %> 
-          <%end%>
-          <%if @user == current_user && course.students.include?(current_user)%>
-             <%= link_to 'Drop', drop_course_path(current_user, course), method: :delete, class:"btn btn-primary"%> 
-          <%end%>
-      <div>
-      <div>
+            <%end%>
+            <%if @user == current_user && course.students.include?(current_user)%>
+              <%= link_to 'Drop', drop_course_path(current_user, course), method: :delete, class:"btn btn-primary"%> 
+            <%end%>
+          </div>
+        </div>
+      </div>
+    <%end%>
   <%end%>
-<%end%>
+</div>
