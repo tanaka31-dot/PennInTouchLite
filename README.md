@@ -4,4 +4,4 @@ There are 4 models involved: `Department`, `Course`, `User`, `Registration`(whic
 ![](https://i.imgur.com/YwWPg0G.png)
 
 ## II. Link to Heroku App
-![](https://penn-in-touch-lite.herokuapp.com/)
+!(https://penn-in-touch-lite.herokuapp.com/)
