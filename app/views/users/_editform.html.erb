@@ -27,7 +27,10 @@
       <%= form.label :password %>
       <%= form.password_field :password_hash, class: 'form-control'%>
 
-        <%= form.submit "Submit", class: "btn btn-primary mt-4 mb-4" %>
+      <%= form.label :image%>
+      <%=form.file_field :image, class: 'form_control mt-4'%>
+        
+      <%= form.submit "Submit", class: "btn btn-primary mt-4 mb-4" %>
 
    <%end%>
   </div>

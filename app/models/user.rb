@@ -10,6 +10,7 @@ class User < ApplicationRecord
     validates :pennkey, presence: true
     validates :pennkey, uniqueness: true
     validates :password_hash, presence: true
+    has_one_attached :image
     
     def full_name
         "#{first_name} #{last_name}"
@@ -30,6 +31,14 @@ class User < ApplicationRecord
     def password=(new_password)
         @password = Password.create(new_password)
         self.password_hash = @password
+    end
+
+    def profile_image
+        if self.image.attached?
+            self.image
+        else
+            "prof.jpg"
+        end
     end
     
 end

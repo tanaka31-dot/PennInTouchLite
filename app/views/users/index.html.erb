@@ -2,10 +2,10 @@
 
 <h1>Users</h1>
 
-<%=link_to 'My Profile', current_user, class: "btn btn-primary mb-2"%>
+<%=link_to image_tag('ava.png', class: "avatar1") + "My Profile", current_user, class: "btn btn-primary mb-2"%>
 
 <h4>Instructors</h4>
-<table class="table">
+<table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
       <th scope="col">First name</th>
@@ -17,7 +17,7 @@
   <% @users.each do |user| %>
   <%if user.is_instructor%>
     <tr>
-      <td><%= user.first_name %></td>
+      <td><%=image_tag user.profile_image, class: "avatar"%><%= user.first_name %></td>
       <td><%= user.last_name %></td>
       <td><%= user.pennkey %></td>
       <td><%= link_to 'Show', user  %></td>
@@ -27,7 +27,7 @@
 </table>
 
 <h4>Students</h4>
-<table class="table">
+<table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
       <th scope="col">First name</th>
@@ -39,7 +39,7 @@
   <% @users.each do |user| %>
   <%if !user.is_instructor%>
     <tr>
-      <td><%= user.first_name %></td>
+      <td><%=image_tag user.profile_image, class: "avatar"%><%= user.first_name %></td>
       <td><%= user.last_name %></td>
       <td><%= user.pennkey %></td>
       <td><%= link_to 'Show', user%></td>
