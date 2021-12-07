@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   skip_before_action :authenticate_user, only: [:new, :create], raise: false
+  before_action :correct_user,   only: [:edit, :update]
 
   # GET /users or /users.json
   def index
@@ -70,5 +71,11 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:first_name, :last_name, :pennkey, :is_instructor, :password_hash, :image)
+    end
+
+    #only allow the right user to edit or update information
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(users_url) unless @user == current_user
     end
 end

@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: %i[ show edit update destroy ]
   before_action :authenticate_user
+  before_action :correct_user,   only: [:edit, :update]
 
   # GET /courses or /courses.json
   def index
@@ -67,5 +68,10 @@ class CoursesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def course_params
       params.require(:course).permit(:department_id, :code, :title, :description)
+    end
+
+    def correct_user
+      @course = Course.find(params[:id])
+      redirect_to(courses_url) unless @course.instructor == current_user
     end
 end
